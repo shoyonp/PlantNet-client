@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
-import axios from "axios";
+import { imageUplode } from "../../api/utils";
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } =
@@ -17,23 +17,16 @@ const SignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     const image = form.image.files[0];
-    const formData = new FormData();
-    formData.append("image", image);
 
     // 1. send image data to imgbb
-    const { data } = await axios.post(
-      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
-      formData,
-    );
-
-    const image_url = data.data.display_url;
+    const photoURL = await imageUplode(image);
 
     try {
       //2. User Registration
       const result = await createUser(email, password);
 
       //3. Save username & profile photo
-      await updateUserProfile(name, image_url);
+      await updateUserProfile(name, photoURL);
       console.log(result);
 
       navigate("/");
