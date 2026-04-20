@@ -3,8 +3,8 @@ import { TbFidgetSpinner } from "react-icons/tb";
 
 const AddPlantForm = ({
   handleSubmit,
-  uplodeButtonText,
-  setUplodeButtonText,
+  uplodeImage,
+  setUplodeImage,
   loading,
 }) => {
   return (
@@ -95,7 +95,12 @@ const AddPlantForm = ({
                 <div className="flex flex-col w-max mx-auto text-center">
                   <label>
                     <input
-                      onChange={(e) => setUplodeButtonText(e.target.files[0])}
+                      onChange={(e) =>
+                        setUplodeImage({
+                          image: e.target.files[0],
+                          url: URL.createObjectURL(e.target.files[0]),
+                        })
+                      }
                       className="text-sm cursor-pointer w-36 hidden"
                       type="file"
                       name="image"
@@ -104,14 +109,17 @@ const AddPlantForm = ({
                       hidden
                     />
                     <div className="bg-lime-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-lime-500">
-                      {uplodeButtonText.name}
+                      {uplodeImage?.image?.name}
                     </div>
                   </label>
                 </div>
               </div>
             </div>
-            {uplodeButtonText.size && (
-              <p>Image Size:{uplodeButtonText.size}Bytes</p>
+            {uplodeImage && (
+              <div className="flex gap-5 items-center">
+                <img className="w-20 " src={uplodeImage?.url} alt="" />
+                <p>Image Size: {uplodeImage?.image?.size} Bytes</p>
+              </div>
             )}
 
             {/* Submit Button */}
@@ -134,6 +142,9 @@ const AddPlantForm = ({
 
 AddPlantForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  setUplodeImage: PropTypes.func.isRequired,
+  uplodeImage: PropTypes.object,
+  loading: PropTypes.bool,
 };
 
 export default AddPlantForm;

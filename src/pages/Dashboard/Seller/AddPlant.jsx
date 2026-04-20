@@ -9,9 +9,10 @@ import toast from "react-hot-toast";
 const AddPlant = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const [uplodeButtonText, setUplodeButtonText] = useState({
-    name: "Uplode Button",
+  const [uplodeImage, setUplodeImage] = useState({
+    image: { name: "Uplode Button" },
   });
+  // console.log(uplodeImage);
   const [loading, setLoading] = useState(false);
   // handle form submit
   const handleSubmit = async (e) => {
@@ -53,6 +54,7 @@ const AddPlant = () => {
     } catch (err) {
       console.log(err);
     } finally {
+      form.reset()
       setLoading(false);
     }
   };
@@ -66,8 +68,8 @@ const AddPlant = () => {
       {/* Form */}
       <AddPlantForm
         handleSubmit={handleSubmit}
-        uplodeButtonText={uplodeButtonText}
-        setUplodeButtonText={setUplodeButtonText}
+        uplodeImage={uplodeImage}
+        setUplodeImage={setUplodeImage}
         loading={loading}
       />
     </div>
