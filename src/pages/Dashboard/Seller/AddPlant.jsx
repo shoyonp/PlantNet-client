@@ -10,7 +10,7 @@ const AddPlant = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [uplodeImage, setUplodeImage] = useState({
-    image: { name: "Uplode Button" },
+    image: { name: "Uplode Image" },
   });
   // console.log(uplodeImage);
   const [loading, setLoading] = useState(false);
