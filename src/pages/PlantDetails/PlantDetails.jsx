@@ -30,7 +30,7 @@ const PlantDetails = () => {
     setIsOpen(false);
   };
 
-  console.log("plant", plant);
+  // console.log("plant", plant);
   const { category, description, image, price, name, quantity, seller } = plant;
   if (isLoading) return <LoadingSpinner />;
 
