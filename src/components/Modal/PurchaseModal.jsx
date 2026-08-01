@@ -80,7 +80,6 @@ const PurchaseModal = ({ closeModal, isOpen, plant, refetch }) => {
       console.log(err);
     } finally {
       closeModal();
-      console.table(order);
     }
   };
   return (
