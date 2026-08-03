@@ -24,10 +24,10 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
       });
       // call refetch to refresh ui(fetch orders data again)
       refetch();
-      toast.success("Order Cancelled")
+      toast.success("Order Cancelled");
     } catch (err) {
       console.log(err);
-      toast.error(err?.response?.data)
+      toast.error(err?.response?.data);
     } finally {
       closeModal();
     }
@@ -62,7 +62,11 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
         <p className="text-gray-900 whitespace-no-wrap">{quantity}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{status}</p>
+        <p
+          className={`whitespace-no-wrap ${status === "Pending" ? "text-yellow-600" : status === "Delivered" ? "text-green-600" : "text-gray-900"}`}
+        >
+          {status}
+        </p>
       </td>
 
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
