@@ -12,6 +12,7 @@ const SellerOrderDataRow = ({ orderData, refetch }) => {
   const { name, price, customer, quantity, address, status, _id, plantId } =
     orderData || {};
 
+  // handle order delete/cancellation
   const handleDelete = async () => {
     try {
       // fetch delet recuest
@@ -31,7 +32,12 @@ const SellerOrderDataRow = ({ orderData, refetch }) => {
       closeModal();
     }
   };
- 
+
+  // handle status change
+  const handleStatus = async (newStatus) => {
+    console.log(newStatus);
+  };
+
   return (
     <tr>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -58,6 +64,7 @@ const SellerOrderDataRow = ({ orderData, refetch }) => {
           <select
             required
             defaultValue={status}
+            onChange={e=>handleStatus(e.target.value)}
             className="p-1 border-2 border-lime-300 focus:outline-lime-500 rounded-md text-gray-900 whitespace-no-wrap bg-white"
             name="category"
           >
