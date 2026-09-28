@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { TbFidgetSpinner } from "react-icons/tb";
+import { shortImageName } from "../../utilities";
 
 const AddPlantForm = ({
   handleSubmit,
@@ -109,7 +110,8 @@ const AddPlantForm = ({
                       hidden
                     />
                     <div className="bg-lime-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-lime-500">
-                      {uplodeImage?.image?.name}
+                      {/* {uplodeImage?.image?.name} */}
+                      {shortImageName(uplodeImage?.image)}
                     </div>
                   </label>
                 </div>
