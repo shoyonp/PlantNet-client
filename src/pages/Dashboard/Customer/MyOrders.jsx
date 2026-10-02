@@ -20,7 +20,7 @@ const MyOrders = () => {
     },
   });
 
-  console.log(orders);
+  console.log(orders,"here is the order");
   if (isLoading) return <LoadingSpinner />;
   return (
     <>
