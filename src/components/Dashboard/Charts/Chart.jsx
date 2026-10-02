@@ -1,8 +1,8 @@
+/* eslint-disable react/prop-types */
 import {
   ResponsiveContainer,
   ComposedChart,
   Line,
-  Area,
   Bar,
   XAxis,
   YAxis,
@@ -14,13 +14,13 @@ import {
 
 const Chart = ({ chartData }) => {
 
-  console.log(chartData);
+  console.log(chartData,"from charts");
 
   return (
     <div className="w-full h-[400px]">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
-          data={[chartData]}
+          data={chartData}
           margin={{
             top: 20,
             right: 20,
@@ -33,7 +33,6 @@ const Chart = ({ chartData }) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
           <Bar dataKey="price" barSize={20} fill="#413ea0" />
           <Line type="monotone" dataKey="quantity" stroke="#ff7300" />
           <Scatter dataKey="order" fill="red" />
