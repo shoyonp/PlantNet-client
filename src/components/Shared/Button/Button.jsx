@@ -47,7 +47,7 @@ const Button = ({
 };
 
 Button.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.node,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   outline: PropTypes.bool,

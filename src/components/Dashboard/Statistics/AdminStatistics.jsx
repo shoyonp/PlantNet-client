@@ -16,7 +16,7 @@ const AdminStatistics = () => {
       return data;
     },
   });
-  console.log(statData);
+  // console.log(statData);
   const { totalUser, totalPlants, totalRevenue, totalOrder, chartData } = statData || {};
   if (isLoading) return <LoadingSpinner />;
 

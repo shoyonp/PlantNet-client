@@ -8,15 +8,17 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const CheckoutForm = ({ closeModal, purchaseInfo, refetch, totalQuantity }) => {
   const axiosSecure = useAxiosSecure();
   const [clientSecret, setClientSecret] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     getPaymentIntent();
   }, [purchaseInfo]);
-  console.log(clientSecret);
+  // console.log(clientSecret);
   const getPaymentIntent = async () => {
     try {
       const { data } = await axiosSecure.post("/create-payment-intent", {
@@ -51,49 +53,69 @@ const CheckoutForm = ({ closeModal, purchaseInfo, refetch, totalQuantity }) => {
       return;
     }
 
-    // Use your card Element with other Stripe.js APIs
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card,
-    });
-    if (error) {
-      console.log("[error]", error);
-    } else {
-      console.log("[PaymentMethod]", paymentMethod);
-    }
+    setLoading(true);
 
-    // confirm payment
-    const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: card,
-        billing_details: {
-          name: purchaseInfo?.customer?.name,
-          email: purchaseInfo?.customer?.email,
-        },
-      },
-    });
-
-    if (paymentIntent.status === "succeeded") {
-      try {
-        // save data in db
-        await axiosSecure.post("/order", {
-          ...purchaseInfo,
-          trasactionId: paymentIntent?.id,
-        });
-        // decrease quantity from plant colection
-        await axiosSecure.patch(`/plants/quantity/${purchaseInfo?.plantId}`, {
-          quantityToUpdate: totalQuantity,
-          status: "decrease",
-        });
-
-        toast.success("Order SuccessFul!");
-        refetch();
-        navigate("/dashboard/my-orders");
-      } catch (err) {
-        console.log(err);
-      } finally {
-        closeModal();
+    try {
+      // Use your card Element with other Stripe.js APIs
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card,
+      });
+      if (error) {
+        console.log("[error]", error);
+        toast.error(error.message);
+        setLoading(false);
+        return;
+      } else {
+        console.log("[PaymentMethod]", paymentMethod);
       }
+
+      // confirm payment
+      const { paymentIntent, error: confirmError } =
+        await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: card,
+            billing_details: {
+              name: purchaseInfo?.customer?.name,
+              email: purchaseInfo?.customer?.email,
+            },
+          },
+        });
+
+      if (confirmError) {
+        console.log("[confirmError]", confirmError);
+        toast.error(confirmError.message);
+        setLoading(false);
+        return;
+      }
+
+      if (paymentIntent.status === "succeeded") {
+        try {
+          // save data in db
+          await axiosSecure.post("/order", {
+            ...purchaseInfo,
+            trasactionId: paymentIntent?.id,
+          });
+          // decrease quantity from plant colection
+          await axiosSecure.patch(`/plants/quantity/${purchaseInfo?.plantId}`, {
+            quantityToUpdate: totalQuantity,
+            status: "decrease",
+          });
+
+          toast.success("Order Successful!");
+          refetch();
+          navigate("/dashboard/my-orders");
+        } catch (err) {
+          console.log(err);
+        } finally {
+          setLoading(false);
+          closeModal();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Payment failed. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -118,10 +140,21 @@ const CheckoutForm = ({ closeModal, purchaseInfo, refetch, totalQuantity }) => {
       <div className="flex justify-around mt-2 gap-3">
         <Button
           type="submit"
-          label={`Pay ${purchaseInfo?.price}$`}
-          disabled={!stripe}
+          label={
+            loading ? (
+              <TbFidgetSpinner className="animate-spin m-auto" />
+            ) : (
+              `Pay ${purchaseInfo?.price}$`
+            )
+          }
+          disabled={!stripe || !clientSecret || loading}
         />
-        <Button outline={true} onClick={closeModal} label={"Cancel"} />
+        <Button
+          outline={true}
+          onClick={closeModal}
+          disabled={loading}
+          label={"Cancel"}
+        />
       </div>
     </form>
   );

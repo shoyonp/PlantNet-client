@@ -145,14 +145,16 @@ const PurchaseModal = ({ closeModal, isOpen, plant, refetch }) => {
                   />
                 </div>
                 {/* checkout form */}
-                <Elements stripe={stripePromise}>
-                  <CheckoutForm
-                    closeModal={closeModal}
-                    purchaseInfo={purchaseInfo}
-                    refetch={refetch}
-                    totalQuantity={totalQuantity}
-                  />
-                </Elements>
+                {isOpen && user && (
+                  <Elements stripe={stripePromise}>
+                    <CheckoutForm
+                      closeModal={closeModal}
+                      purchaseInfo={purchaseInfo}
+                      refetch={refetch}
+                      totalQuantity={totalQuantity}
+                    />
+                  </Elements>
+                )}
               </DialogPanel>
             </TransitionChild>
           </div>
