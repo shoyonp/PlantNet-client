@@ -9,16 +9,16 @@ The client application of **PlantNet** is a modern, responsive Single Page Appli
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
 
 - **Production URL**: [https://plantnet-9fdc2.web.app](https://plantnet-9fdc2.web.app)
 - **Backend API**: [https://serverofplantnet.vercel.app](https://serverofplantnet.vercel.app)
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 👤 Customer Features
+### Customer Features
 - **Browse & Filter**: Explore indoor and outdoor plant collections with real-time stock levels, pricing, categories, and seller information.
 - **Plant Details**: Comprehensive plant profile page displaying high-resolution images, rich descriptions, seller credentials, and instant stock indicators.
 - **Interactive Checkout Modal**: Dynamic purchase calculation, quantity selector (with stock limitation guards), and shipping address entry.
@@ -26,19 +26,19 @@ The client application of **PlantNet** is a modern, responsive Single Page Appli
 - **Order Tracking**: Dedicated customer dashboard ("My Orders") to monitor payment receipts, transaction IDs, and order statuses (`Pending`, `In Progress`, `Delivered`).
 - **Become a Seller**: In-app role upgrade request workflow.
 
-### 🌿 Seller Features
+### Seller Features
 - **Seller Dashboard**: Protected inventory control panel tailored specifically for verified sellers (`SellerRoute`).
 - **Add Plants**: Streamlined upload interface with image hosting (ImgBB), category selection, description, pricing, and stock quantity.
 - **Inventory Management**: View, update quantity, and delete plant listings in real-time.
 - **Order Fulfillment**: Track customer purchases, view order details, update shipping statuses, or handle cancellations.
 - **Email Notifications**: Instant transactional emails dispatched to both seller and customer upon successful checkout via Nodemailer.
 
-### 🛠️ Admin Features
+### Admin Features
 - **Analytics & Statistics**: High-level KPI cards displaying Total Revenue, Total Orders, Total Plants, and Total Users.
 - **Data Visualizations**: Responsive charts built with Recharts (`ComposedChart` combining Area, Bar, Line, and Scatter plots).
 - **User Governance**: Full user directory management (`AdminRoute`) with the ability to promote, demote, and verify user roles (`customer`, `seller`, `admin`).
 
-### 🔐 Security & Architecture
+### Security & Architecture
 - **Authentication**: Firebase Authentication (Email/Password & Google OAuth).
 - **JWT Authorization**: Cryptographically signed JSON Web Tokens stored in secure HTTP-only cookies (`sameSite: "none"`, `secure: true`).
 - **RBAC (Role-Based Access Control)**: Backend middleware (`verifyToken`, `verifySeller`, `verifyAdmin`) and client-side route guards (`PrivateRoute`, `SellerRoute`, `AdminRoute`).
@@ -46,7 +46,7 @@ The client application of **PlantNet** is a modern, responsive Single Page Appli
 
 ---
 
-## 📦 Key Libraries & Technologies
+## Key Libraries & Technologies
 
 - **Core**: React 18, React DOM, Vite 6
 - **Styling & UI Components**: Tailwind CSS, DaisyUI, Headless UI (`@headlessui/react`)
@@ -60,7 +60,7 @@ The client application of **PlantNet** is a modern, responsive Single Page Appli
 
 ---
 
-## 📂 Project Architecture
+## Project Architecture
 
 ```text
 client/src/
@@ -101,7 +101,7 @@ client/src/
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 
 ### 1. Install Dependencies
 ```bash
@@ -140,7 +140,7 @@ Visit `http://localhost:5173` in your browser.
 
 ---
 
-## 📜 Available Scripts
+## Available Scripts
 
 | Command | Description |
 |---|---|
@@ -151,7 +151,7 @@ Visit `http://localhost:5173` in your browser.
 
 ---
 
-## 🚢 Deploying to Firebase Hosting
+## Deploying to Firebase Hosting
 
 1. Make sure Firebase CLI is installed and logged in:
    ```bash
